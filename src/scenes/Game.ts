@@ -1,6 +1,6 @@
 import { Sprite } from "pixi.js";
 import Scene from "../core/Scene";
-import { Wizard } from "../entities/Wizard";
+import { Player } from "../entities/Player";
 import { centerObjects } from "../utils/misc";
 
 export default class Game extends Scene {
@@ -9,10 +9,10 @@ export default class Game extends Scene {
 	load() {
 		const bg = Sprite.from("bgWaterfall");
 
-		const wizard = new Wizard();
+		const player = new Player();
 
-		centerObjects(bg, wizard);
+		centerObjects(bg, player);
 
-		this.addChild(bg, wizard);
+		this.addChild(bg, player);
 	}
 }
