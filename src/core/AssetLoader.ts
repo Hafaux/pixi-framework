@@ -1,5 +1,6 @@
-import { Loader } from "pixi.js";
-import { debug, importAssetFiles } from "../utils/misc";
+import { Loader, LoaderResource, Spritesheet } from "pixi.js";
+import { debug } from "../utils/debug";
+import { importAssetFiles } from "../utils/misc";
 
 type Asset = {
 	name: string;
@@ -9,6 +10,8 @@ type Asset = {
 	group: string;
 };
 
+export const spritesheets: Record<string, Spritesheet> = {};
+
 /**
  * Replace with https://pixijs.download/dev/docs/PIXI.Assets.html when it's released
  */
@@ -16,13 +19,9 @@ export default class AssetLoader {
 	private static instance: AssetLoader;
 	private assetFileUrls = importAssetFiles();
 
-	private loader: Loader;
-
-	cache: any;
 	manifest: Asset[];
 
 	private constructor() {
-		this.loader = new Loader();
 		this.manifest = this.generateManifest();
 	}
 
@@ -35,42 +34,64 @@ export default class AssetLoader {
 	}
 
 	loadAssetsGroup(group: any) {
+		const loader = new Loader();
 		const sceneAssets = this.manifest.filter((asset) => asset.group === group);
 
-		debug.log("Loading assets group", group, sceneAssets);
-
 		for (const asset of sceneAssets) {
-			this.loader.add(asset.name, asset.url);
+			loader.add(asset.name, asset.url);
 		}
 
-		return new Promise<void>((resolve, _reject) => {
-			this.loader.load((_loader, resources) => {
-				debug.warn("Loaded assets group", group, resources);
+		return new Promise<Asset[]>((resolve, _reject) => {
+			loader.load((_loader, resources) => {
+				this.prepareSpritesheets(resources);
 
-				this.cache = resources;
+				debug.warn("✅ Loaded assets group", group, resources);
 
-				resolve();
+				if (Object.keys(spritesheets).length)
+					debug.warn("🌟 Spritesheets: ", spritesheets);
+
+				resolve(sceneAssets);
 			});
 		});
+	}
+
+	prepareSpritesheets(resources: Record<string, LoaderResource>) {
+		for (const [name, resource] of Object.entries(resources)) {
+			const { spritesheet } = resource;
+
+			if (!spritesheet) continue;
+
+			spritesheets[name] = spritesheet;
+		}
 	}
 
 	generateManifest() {
 		const assetsManifest: Asset[] = [];
 		const assetPathRegexp =
-			/assets\/(?<group>\w+)\/(?<category>\w+)\/(?<name>[\w.]+)\.(?<ext>\w+)$/;
+			/public\/(?<group>[\w.-]+)\/(?<category>[\w.-]+)\/(?<name>[\w.-]+)\.(?<ext>\w+)$/;
 
-		this.assetFileUrls.map((assetPath) => {
+		this.assetFileUrls.forEach((assetPath) => {
 			const match = assetPathRegexp.exec(assetPath);
 
-			if (!match) {
+			if (!match || !match.groups) {
 				return console.error(
 					`Invalid asset path: ${assetPath}, should match ${assetPathRegexp}`
 				);
 			}
 
+			const { group, category, name, ext } = match.groups;
+
+			if (category === "spritesheets" && ext !== "json") {
+				// Skip image files in spritesheets category
+				return;
+			}
+
 			assetsManifest.push({
-				...(match.groups as Omit<Asset, "url">),
-				url: assetPath,
+				group,
+				category,
+				name,
+				ext,
+				url: assetPath.replace(/.*public/, ""),
 			});
 		});
 

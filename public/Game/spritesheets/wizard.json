@@ -1,0 +1,535 @@
+{
+	"frames": {
+		"Chara - BlueIdle00000.png": {
+			"frame": { "x": 813, "y": 158, "w": 156, "h": 280 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 123, "w": 156, "h": 280 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara - BlueIdle00001.png": {
+			"frame": { "x": 1095, "y": 158, "w": 156, "h": 281 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 122, "w": 156, "h": 281 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara - BlueIdle00002.png": {
+			"frame": { "x": 554, "y": 474, "w": 157, "h": 281 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 122, "w": 157, "h": 281 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara - BlueIdle00003.png": {
+			"frame": { "x": 837, "y": 474, "w": 157, "h": 281 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 122, "w": 157, "h": 281 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara - BlueIdle00004.png": {
+			"frame": { "x": 1120, "y": 474, "w": 157, "h": 281 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 122, "w": 157, "h": 281 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara - BlueIdle00005.png": {
+			"frame": { "x": 1403, "y": 474, "w": 157, "h": 281 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 122, "w": 157, "h": 281 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara - BlueIdle00006.png": {
+			"frame": { "x": 1686, "y": 474, "w": 157, "h": 282 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 121, "w": 157, "h": 282 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara - BlueIdle00007.png": {
+			"frame": { "x": 551, "y": 633, "w": 157, "h": 282 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 121, "w": 157, "h": 282 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara - BlueIdle00008.png": {
+			"frame": { "x": 835, "y": 633, "w": 157, "h": 282 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 121, "w": 157, "h": 282 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara - BlueIdle00009.png": {
+			"frame": { "x": 1119, "y": 633, "w": 157, "h": 282 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 121, "w": 157, "h": 282 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara - BlueIdle00010.png": {
+			"frame": { "x": 1403, "y": 633, "w": 157, "h": 282 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 121, "w": 157, "h": 282 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara - BlueIdle00011.png": {
+			"frame": { "x": 1119, "y": 633, "w": 157, "h": 282 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 121, "w": 157, "h": 282 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara - BlueIdle00012.png": {
+			"frame": { "x": 835, "y": 633, "w": 157, "h": 282 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 121, "w": 157, "h": 282 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara - BlueIdle00013.png": {
+			"frame": { "x": 551, "y": 633, "w": 157, "h": 282 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 121, "w": 157, "h": 282 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara - BlueIdle00014.png": {
+			"frame": { "x": 1686, "y": 474, "w": 157, "h": 282 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 121, "w": 157, "h": 282 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara - BlueIdle00015.png": {
+			"frame": { "x": 1403, "y": 474, "w": 157, "h": 281 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 122, "w": 157, "h": 281 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara - BlueIdle00016.png": {
+			"frame": { "x": 1120, "y": 474, "w": 157, "h": 281 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 122, "w": 157, "h": 281 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara - BlueIdle00017.png": {
+			"frame": { "x": 837, "y": 474, "w": 157, "h": 281 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 122, "w": 157, "h": 281 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara - BlueIdle00018.png": {
+			"frame": { "x": 554, "y": 474, "w": 157, "h": 281 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 122, "w": 157, "h": 281 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara - BlueIdle00019.png": {
+			"frame": { "x": 1095, "y": 158, "w": 156, "h": 281 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 122, "w": 156, "h": 281 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00000.png": {
+			"frame": { "x": 281, "y": 315, "w": 156, "h": 273 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 123, "w": 156, "h": 273 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00001.png": {
+			"frame": { "x": 1, "y": 472, "w": 157, "h": 273 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 176, "y": 123, "w": 157, "h": 273 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00002.png": {
+			"frame": { "x": 276, "y": 473, "w": 157, "h": 276 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 175, "y": 122, "w": 157, "h": 276 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00003.png": {
+			"frame": { "x": 556, "y": 316, "w": 156, "h": 279 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 175, "y": 122, "w": 156, "h": 279 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00004.png": {
+			"frame": { "x": 837, "y": 316, "w": 156, "h": 280 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 174, "y": 121, "w": 156, "h": 280 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00005.png": {
+			"frame": { "x": 1366, "y": 1, "w": 155, "h": 277 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 174, "y": 122, "w": 155, "h": 277 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00006.png": {
+			"frame": { "x": 1119, "y": 316, "w": 156, "h": 273 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 174, "y": 121, "w": 156, "h": 273 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00007.png": {
+			"frame": { "x": 1, "y": 155, "w": 156, "h": 265 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 175, "y": 122, "w": 156, "h": 265 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00008.png": {
+			"frame": { "x": 1, "y": 631, "w": 157, "h": 272 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 175, "y": 122, "w": 157, "h": 272 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00009.png": {
+			"frame": { "x": 275, "y": 632, "w": 157, "h": 274 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 176, "y": 123, "w": 157, "h": 274 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00010.png": {
+			"frame": { "x": 541, "y": 157, "w": 156, "h": 270 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 177, "y": 123, "w": 156, "h": 270 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00011.png": {
+			"frame": { "x": 1, "y": 790, "w": 157, "h": 270 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 175, "y": 124, "w": 157, "h": 270 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00012.png": {
+			"frame": { "x": 1394, "y": 316, "w": 156, "h": 271 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 175, "y": 125, "w": 156, "h": 271 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00013.png": {
+			"frame": { "x": 1645, "y": 1, "w": 155, "h": 270 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 174, "y": 128, "w": 155, "h": 270 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00014.png": {
+			"frame": { "x": 271, "y": 1, "w": 154, "h": 269 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 174, "y": 130, "w": 154, "h": 269 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00015.png": {
+			"frame": { "x": 1, "y": 1, "w": 152, "h": 268 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 174, "y": 132, "w": 152, "h": 268 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00016.png": {
+			"frame": { "x": 542, "y": 1, "w": 154, "h": 270 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 174, "y": 130, "w": 154, "h": 270 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00017.png": {
+			"frame": { "x": 268, "y": 157, "w": 155, "h": 271 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 174, "y": 128, "w": 155, "h": 271 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00018.png": {
+			"frame": { "x": 1667, "y": 316, "w": 156, "h": 273 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 175, "y": 125, "w": 156, "h": 273 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"Chara_BlueWalk00019.png": {
+			"frame": { "x": 273, "y": 791, "w": 157, "h": 273 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 175, "y": 124, "w": 157, "h": 273 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"CharaWizardJump_00000.png": {
+			"frame": { "x": 1687, "y": 633, "w": 157, "h": 280 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 176, "y": 123, "w": 157, "h": 280 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"CharaWizardJump_00001.png": {
+			"frame": { "x": 1378, "y": 158, "w": 156, "h": 277 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 175, "y": 125, "w": 156, "h": 277 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"CharaWizardJump_00002.png": {
+			"frame": { "x": 814, "y": 1, "w": 155, "h": 272 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 172, "y": 127, "w": 155, "h": 272 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"CharaWizardJump_00003.png": {
+			"frame": { "x": 1657, "y": 158, "w": 156, "h": 274 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 173, "y": 126, "w": 156, "h": 274 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"CharaWizardJump_00004.png": {
+			"frame": { "x": 1088, "y": 1, "w": 155, "h": 276 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 175, "y": 125, "w": 155, "h": 276 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"CharaWizardJump_00005.png": {
+			"frame": { "x": 1, "y": 314, "w": 156, "h": 278 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 175, "y": 124, "w": 156, "h": 278 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"CharaWizardJump_00006.png": {
+			"frame": { "x": 548, "y": 792, "w": 157, "h": 280 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 175, "y": 123, "w": 157, "h": 280 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"CharaWizardJump_00007.png": {
+			"frame": { "x": 830, "y": 792, "w": 157, "h": 280 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 176, "y": 123, "w": 157, "h": 280 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"DashEffect/BlueWizardDash_00000.png": {
+			"frame": { "x": 1112, "y": 792, "w": 157, "h": 290 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 176, "y": 123, "w": 157, "h": 290 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"DashEffect/BlueWizardDash_00001.png": {
+			"frame": { "x": 1700, "y": 792, "w": 160, "h": 293 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 173, "y": 122, "w": 160, "h": 293 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"DashEffect/BlueWizardDash_00002.png": {
+			"frame": { "x": 1191, "y": 952, "w": 173, "h": 287 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 162, "y": 124, "w": 173, "h": 287 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"DashEffect/BlueWizardDash_00003.png": {
+			"frame": { "x": 574, "y": 1117, "w": 188, "h": 272 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 151, "y": 130, "w": 188, "h": 272 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"DashEffect/BlueWizardDash_00004.png": {
+			"frame": { "x": 1774, "y": 954, "w": 201, "h": 254 },
+			"rotated": false,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 143, "y": 137, "w": 201, "h": 254 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"DashEffect/BlueWizardDash_00005.png": {
+			"frame": { "x": 1395, "y": 1130, "w": 197, "h": 260 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 146, "y": 135, "w": 197, "h": 260 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"DashEffect/BlueWizardDash_00006.png": {
+			"frame": { "x": 1125, "y": 1127, "w": 194, "h": 268 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 148, "y": 132, "w": 194, "h": 268 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"DashEffect/BlueWizardDash_00007.png": {
+			"frame": { "x": 848, "y": 1122, "w": 190, "h": 275 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 151, "y": 129, "w": 190, "h": 275 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"DashEffect/BlueWizardDash_00008.png": {
+			"frame": { "x": 290, "y": 1113, "w": 184, "h": 282 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 155, "y": 126, "w": 184, "h": 282 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"DashEffect/BlueWizardDash_00009.png": {
+			"frame": { "x": 1, "y": 1111, "w": 179, "h": 287 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 159, "y": 124, "w": 179, "h": 287 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"DashEffect/BlueWizardDash_00010.png": {
+			"frame": { "x": 1480, "y": 954, "w": 174, "h": 292 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 163, "y": 122, "w": 174, "h": 292 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"DashEffect/BlueWizardDash_00011.png": {
+			"frame": { "x": 895, "y": 951, "w": 169, "h": 294 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 167, "y": 121, "w": 169, "h": 294 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"DashEffect/BlueWizardDash_00012.png": {
+			"frame": { "x": 597, "y": 951, "w": 164, "h": 296 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 171, "y": 120, "w": 164, "h": 296 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"DashEffect/BlueWizardDash_00013.png": {
+			"frame": { "x": 299, "y": 951, "w": 160, "h": 296 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 174, "y": 120, "w": 160, "h": 296 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"DashEffect/BlueWizardDash_00014.png": {
+			"frame": { "x": 1, "y": 950, "w": 159, "h": 296 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 175, "y": 120, "w": 159, "h": 296 },
+			"sourceSize": { "w": 512, "h": 512 }
+		},
+		"DashEffect/BlueWizardDash_00015.png": {
+			"frame": { "x": 1404, "y": 792, "w": 158, "h": 294 },
+			"rotated": true,
+			"trimmed": true,
+			"spriteSourceSize": { "x": 176, "y": 121, "w": 158, "h": 294 },
+			"sourceSize": { "w": 512, "h": 512 }
+		}
+	},
+	"animations": {
+		"idle": [
+			"Chara - BlueIdle00000.png",
+			"Chara - BlueIdle00001.png",
+			"Chara - BlueIdle00002.png",
+			"Chara - BlueIdle00003.png",
+			"Chara - BlueIdle00004.png",
+			"Chara - BlueIdle00005.png",
+			"Chara - BlueIdle00006.png",
+			"Chara - BlueIdle00007.png",
+			"Chara - BlueIdle00008.png",
+			"Chara - BlueIdle00009.png",
+			"Chara - BlueIdle00010.png",
+			"Chara - BlueIdle00011.png",
+			"Chara - BlueIdle00012.png",
+			"Chara - BlueIdle00013.png",
+			"Chara - BlueIdle00014.png",
+			"Chara - BlueIdle00015.png",
+			"Chara - BlueIdle00016.png",
+			"Chara - BlueIdle00017.png",
+			"Chara - BlueIdle00018.png",
+			"Chara - BlueIdle00019.png"
+		],
+		"jump": [
+			"CharaWizardJump_00000.png",
+			"CharaWizardJump_00001.png",
+			"CharaWizardJump_00002.png",
+			"CharaWizardJump_00003.png",
+			"CharaWizardJump_00004.png",
+			"CharaWizardJump_00005.png",
+			"CharaWizardJump_00006.png",
+			"CharaWizardJump_00007.png"
+		],
+		"walk": [
+			"Chara_BlueWalk00000.png",
+			"Chara_BlueWalk00001.png",
+			"Chara_BlueWalk00002.png",
+			"Chara_BlueWalk00003.png",
+			"Chara_BlueWalk00004.png",
+			"Chara_BlueWalk00005.png",
+			"Chara_BlueWalk00006.png",
+			"Chara_BlueWalk00007.png",
+			"Chara_BlueWalk00008.png",
+			"Chara_BlueWalk00009.png",
+			"Chara_BlueWalk00010.png",
+			"Chara_BlueWalk00011.png",
+			"Chara_BlueWalk00012.png",
+			"Chara_BlueWalk00013.png",
+			"Chara_BlueWalk00014.png",
+			"Chara_BlueWalk00015.png",
+			"Chara_BlueWalk00016.png",
+			"Chara_BlueWalk00017.png",
+			"Chara_BlueWalk00018.png",
+			"Chara_BlueWalk00019.png"
+		],
+		"dash": [
+			"DashEffect/BlueWizardDash_00000.png",
+			"DashEffect/BlueWizardDash_00001.png",
+			"DashEffect/BlueWizardDash_00002.png",
+			"DashEffect/BlueWizardDash_00003.png",
+			"DashEffect/BlueWizardDash_00004.png",
+			"DashEffect/BlueWizardDash_00005.png",
+			"DashEffect/BlueWizardDash_00006.png",
+			"DashEffect/BlueWizardDash_00007.png",
+			"DashEffect/BlueWizardDash_00008.png",
+			"DashEffect/BlueWizardDash_00009.png",
+			"DashEffect/BlueWizardDash_00010.png",
+			"DashEffect/BlueWizardDash_00011.png",
+			"DashEffect/BlueWizardDash_00012.png",
+			"DashEffect/BlueWizardDash_00013.png",
+			"DashEffect/BlueWizardDash_00014.png",
+			"DashEffect/BlueWizardDash_00015.png"
+		]
+	},
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "wizard.png",
+		"format": "RGBA8888",
+		"size": { "w": 1994, "h": 1328 },
+		"scale": "1",
+		"smartupdate": "$TexturePacker:SmartUpdate:767c5658a76fd1e213bdfc88af2052e4:c6d6d7c804b9838e93134232d9a9dd8b:77a4302c97213281e93465e183b99899$"
+	}
+}

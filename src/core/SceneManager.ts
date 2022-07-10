@@ -1,5 +1,5 @@
 import { AbstractRenderer, Application, Container, Ticker } from "pixi.js";
-import { debug, importScenes } from "../utils/misc";
+import { importScenes } from "../utils/misc";
 import Scene from "./Scene";
 
 export default class SceneManager {
@@ -39,8 +39,6 @@ export default class SceneManager {
 	}
 
 	async switchScene(sceneName: string, deletePrevious = true): Promise<Scene> {
-		debug.log("Switching to scene", sceneName);
-
 		await this.removeScene(deletePrevious);
 
 		this.currentScene = this.sceneInstances.get(sceneName);
@@ -49,17 +47,13 @@ export default class SceneManager {
 
 		this.stage.addChild(this.currentScene);
 
-		await this.currentScene.start();
+		if (this.currentScene.start) await this.currentScene.start();
 
 		return this.currentScene;
 	}
 
 	private removeScene(deleteScene: Boolean) {
 		if (!this.currentScene) return;
-
-		debug.log("Removing scene", this.currentScene.name, {
-			deleteScene,
-		});
 
 		this.stage.removeChild(this.currentScene);
 
@@ -71,8 +65,6 @@ export default class SceneManager {
 	}
 
 	private async initScene(sceneName: string) {
-		debug.log("Initializing scene", sceneName);
-
 		const scene = new this.sceneConstructors[sceneName]();
 
 		this.sceneInstances.set(sceneName, scene);
@@ -81,4 +73,11 @@ export default class SceneManager {
 
 		return scene;
 	}
+}
+
+if (import.meta.env.DEV) {
+	const PIXI = await import("pixi.js");
+
+	(window as any).PIXI = PIXI;
+	(window as any).sceneManager = SceneManager.getInstance();
 }

@@ -1,10 +1,10 @@
-import { Sprite } from "pixi.js";
+import { Sprite, Text } from "pixi.js";
 import AssetLoader from "../core/AssetLoader";
 import Scene from "../core/Scene";
-import { centerObject, wait } from "../utils/misc";
+import { centerObjects } from "../utils/misc";
 
 export default class Loading extends Scene {
-	sceneName = "Loading";
+	name = "Loading";
 
 	assetLoader = AssetLoader.getInstance();
 
@@ -13,17 +13,20 @@ export default class Loading extends Scene {
 
 		const bg = Sprite.from("bgNight");
 
-		centerObject(bg);
+		const text = new Text("Loading...", {
+			fontFamily: "Verdana",
+			fontSize: 50,
+			fill: "white",
+		});
 
-		this.addChild(bg);
+		text.resolution = 2;
+
+		centerObjects(bg, text);
+
+		this.addChild(bg, text);
 	}
 
 	async start() {
-		super.start();
-
-		// Simulate longer loading time
-		await wait(1);
-
-		return this.assetLoader.loadAssetsGroup("Game");
+		await this.assetLoader.loadAssetsGroup("Game");
 	}
 }
