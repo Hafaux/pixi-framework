@@ -1,6 +1,9 @@
 import { AbstractRenderer, Application, Container, Ticker } from "pixi.js";
+import { debug } from "../utils/debug";
 import { importScenes } from "../utils/misc";
 import Scene from "./Scene";
+
+if (import.meta.env.DEV) debug.init();
 
 export default class SceneManager {
 	private static instance: SceneManager;
@@ -73,11 +76,4 @@ export default class SceneManager {
 
 		return scene;
 	}
-}
-
-if (import.meta.env.DEV) {
-	const PIXI = await import("pixi.js");
-
-	(window as any).PIXI = PIXI;
-	(window as any).sceneManager = SceneManager.getInstance();
 }

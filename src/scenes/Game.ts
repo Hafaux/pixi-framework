@@ -8,6 +8,7 @@ export default class Game extends Scene {
 
 	load() {
 		const bg = Sprite.from("bgWaterfall");
+
 		const wizard = new Wizard();
 
 		centerObjects(bg, wizard);
