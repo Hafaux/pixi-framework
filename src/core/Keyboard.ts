@@ -8,21 +8,21 @@ export default class Keyboard extends utils.EventEmitter {
 	};
 
 	static actions = {
-		// UP: "UP",
-		// DOWN: "DOWN",
+		UP: "UP",
+		DOWN: "DOWN",
 		LEFT: "LEFT",
 		RIGHT: "RIGHT",
 		JUMP: "JUMP",
-		DASH: "DASH",
+		SHIFT: "SHIFT",
 	} as const;
 
 	static actionKeyMap = {
-		// [Keyboard.actions.UP]: "KeyW",
-		// [Keyboard.actions.DOWN]: "KeyS",
+		[Keyboard.actions.UP]: "KeyW",
+		[Keyboard.actions.DOWN]: "KeyS",
 		[Keyboard.actions.LEFT]: "KeyA",
 		[Keyboard.actions.RIGHT]: "KeyD",
 		[Keyboard.actions.JUMP]: "Space",
-		[Keyboard.actions.DASH]: "ShiftLeft",
+		[Keyboard.actions.SHIFT]: "ShiftLeft",
 	} as const;
 
 	static allKeys = Object.values(Keyboard.actionKeyMap);
@@ -41,10 +41,10 @@ export default class Keyboard extends utils.EventEmitter {
 	private constructor() {
 		super();
 
-		this.subscribe();
+		this.listenToKeyEvents();
 	}
 
-	private subscribe() {
+	private listenToKeyEvents() {
 		document.addEventListener("keydown", (e) => this.onKeyPress(e.code));
 		document.addEventListener("keyup", (e) => this.onKeyRelease(e.code));
 	}
@@ -64,7 +64,7 @@ export default class Keyboard extends utils.EventEmitter {
 	public onAction(
 		callback: (e: {
 			action: keyof typeof Keyboard.actions;
-			state: "pressed" | "released";
+			buttonState: "pressed" | "released";
 		}) => void
 	): void {
 		this.on(Keyboard.states.ACTION, callback);
@@ -77,16 +77,18 @@ export default class Keyboard extends utils.EventEmitter {
 
 		this.emit(Keyboard.states.ACTION, {
 			action: Keyboard.keyActionMap[key],
-			state: "pressed",
+			buttonState: "pressed",
 		});
 	}
 
 	private onKeyRelease(key: string): void {
+		if (!(key in Keyboard.keyActionMap)) return;
+
 		this.keyMap.set(key, false);
 
 		this.emit(Keyboard.states.ACTION, {
 			action: Keyboard.keyActionMap[key],
-			state: "released",
+			buttonState: "released",
 		});
 	}
 

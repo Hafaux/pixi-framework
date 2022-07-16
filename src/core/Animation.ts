@@ -4,7 +4,7 @@ import { spritesheets } from "./AssetLoader";
 
 export default class Animation extends Container {
 	animationTextures: typeof spritesheets[""]["animations"];
-	animatedSprite: AnimatedSprite | undefined;
+	sprite: AnimatedSprite | undefined;
 	speed: number = 1;
 
 	animations = new Map<string, AnimatedSprite>();
@@ -48,36 +48,36 @@ export default class Animation extends Container {
 		loop?: boolean;
 		speed?: number;
 	}) {
-		if (this.animatedSprite) {
-			this.animatedSprite.stop();
+		if (this.sprite) {
+			this.sprite.stop();
 
-			this.removeChild(this.animatedSprite);
+			this.removeChild(this.sprite);
 		}
 
-		this.animatedSprite = this.animations.get(anim);
+		this.sprite = this.animations.get(anim);
 
-		if (!this.animatedSprite) {
-			this.animatedSprite = this.initAnimation(anim);
+		if (!this.sprite) {
+			this.sprite = this.initAnimation(anim);
 
-			if (!this.animatedSprite) return;
+			if (!this.sprite) return;
 
-			this.animations.set(anim, this.animatedSprite);
+			this.animations.set(anim, this.sprite);
 		}
 
 		this.currentAnimation = anim;
 
-		this.animatedSprite.loop = loop;
-		this.animatedSprite.animationSpeed = speed;
-		this.animatedSprite.gotoAndPlay(0);
+		this.sprite.loop = loop;
+		this.sprite.animationSpeed = speed;
+		this.sprite.gotoAndPlay(0);
 
 		if (soundName) sound.play(soundName);
 
-		this.addChild(this.animatedSprite);
+		this.addChild(this.sprite);
 
 		return new Promise<void>((resolve) => {
-			if (!this.animatedSprite) return resolve();
+			if (!this.sprite) return resolve();
 
-			this.animatedSprite.onComplete = () => {
+			this.sprite.onComplete = () => {
 				this.currentAnimation = null;
 
 				resolve();

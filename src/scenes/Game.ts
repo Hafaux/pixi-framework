@@ -1,5 +1,5 @@
-import { Sprite } from "pixi.js";
 import Scene from "../core/Scene";
+import ParallaxBackground from "../entities/ParallaxBackground";
 import { Player } from "../entities/Player";
 import { centerObjects } from "../utils/misc";
 
@@ -7,12 +7,34 @@ export default class Game extends Scene {
 	name = "Game";
 
 	load() {
-		const bg = Sprite.from("bgWaterfall");
+		const world = new ParallaxBackground(
+			[
+				"sky",
+				"clouds_1",
+				"rocks",
+				"clouds_2",
+				"ground_1",
+				"ground_2",
+				"ground_3",
+				"plant",
+			],
+			{
+				speed: 0.2,
+				offset: {
+					x: 0,
+					y: -100,
+				},
+			}
+		);
 
 		const player = new Player();
 
-		centerObjects(bg, player);
+		player.initPlayerMovement(world);
 
-		this.addChild(bg, player);
+		centerObjects(world, player);
+
+		player.y += 300;
+
+		this.addChild(world, player);
 	}
 }

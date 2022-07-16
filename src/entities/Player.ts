@@ -1,8 +1,8 @@
 import Entity, { EntityState } from "../core/Entity";
 import gsap from "gsap";
 import Keyboard from "../core/Keyboard";
-import { IMediaInstance } from "@pixi/sound";
 import { wait } from "../utils/misc";
+import ParallaxBackground from "./ParallaxBackground";
 
 enum Directions {
 	LEFT = -1,
@@ -10,41 +10,17 @@ enum Directions {
 }
 
 export class Player extends Entity {
-	keyboard = Keyboard.getInstance();
-
-	config = {
-		speed: 10,
-		dashMultiplier: 6,
-		jumpHeight: 200,
-		scale: 1,
-		maxJumps: 2,
-		dashDuration: 0.1,
-		decelerateDuration: 0.1,
-	};
-
-	velocity = {
-		x: 0,
-		y: 0,
-	};
-
-	decelerationTween?: gsap.core.Tween;
-
-	jumping = false;
-	dashing = false;
-
-	jumpCounter = 0;
-
-	walkingSound?: IMediaInstance;
+	private keyboard = Keyboard.getInstance();
 
 	static animStates: Record<string, EntityState> = {
 		idle: {
 			anim: "idle",
 			loop: true,
-			speed: 0.5,
+			speed: 0.3,
 		},
 		jump: {
 			anim: "jump",
-			soundName: "jump",
+			soundName: "jump2",
 			loop: false,
 			speed: 0.5,
 		},
@@ -57,42 +33,99 @@ export class Player extends Entity {
 			anim: "dash",
 			soundName: "dash",
 			loop: false,
-			speed: 1.5,
+			speed: 1,
 		},
 	};
+
+	config = {
+		speed: 10,
+		dashMultiplier: 6,
+		jumpHeight: 200,
+		scale: 1,
+		maxJumps: 2,
+		dashDuration: 0.1,
+		decelerateDuration: 0.1,
+	};
+
+	state = {
+		jumping: false,
+		dashing: false,
+		velocity: {
+			x: 0,
+			y: 0,
+		},
+	};
+
+	private decelerationTween?: gsap.core.Tween;
 
 	constructor() {
 		super({ spritesheet: "wizard" });
 
 		this.setState(Player.animStates.idle);
 
-		const actionFnMap = {
-			LEFT: () => this.move(Directions.LEFT),
-			RIGHT: () => this.move(Directions.RIGHT),
-			JUMP: () => this.jump(),
-			DASH: () => this.dash(),
-		};
-
-		this.keyboard.onAction(({ action, state }) => {
-			if (state === "pressed") {
-				actionFnMap[action]();
-			} else {
-				if (
-					(action === "LEFT" && this.velocity.x < 0) ||
-					(action === "RIGHT" && this.velocity.x > 0)
-				) {
-					this.stopMovement();
-				}
-			}
-		});
-
-		this.ticker.add((delta) => {
-			this.x += this.velocity.x * delta;
-			this.y += this.velocity.y * delta;
+		this.keyboard.onAction(({ action, buttonState }) => {
+			if (buttonState === "pressed") this.onActionPress(action);
+			else if (buttonState === "released") this.onActionRelease(action);
 		});
 	}
 
-	updateAnimState() {
+	private onActionPress(action: keyof typeof Keyboard.actions) {
+		switch (action) {
+			case "LEFT":
+				this.move(Directions.LEFT);
+				break;
+			case "RIGHT":
+				this.move(Directions.RIGHT);
+				break;
+			case "JUMP":
+				this.jump();
+				break;
+			case "SHIFT":
+				this.dash();
+				break;
+
+			default:
+				break;
+		}
+	}
+
+	onActionRelease(action: keyof typeof Keyboard.actions) {
+		if (
+			(action === "LEFT" && this.state.velocity.x < 0) ||
+			(action === "RIGHT" && this.state.velocity.x > 0)
+		) {
+			this.stopMovement();
+		}
+	}
+
+	private set jumping(value: boolean) {
+		this.state.jumping = value;
+		this.updateAnimState();
+	}
+
+	private set dashing(value: boolean) {
+		this.state.dashing = value;
+		this.updateAnimState();
+	}
+
+	get jumping() {
+		return this.state.jumping;
+	}
+
+	get dashing() {
+		return this.state.dashing;
+	}
+
+	initPlayerMovement(world: ParallaxBackground) {
+		this.ticker.add((delta) => {
+			const x = this.state.velocity.x * delta;
+			const y = this.state.velocity.y * delta;
+
+			world.updatePosition(x, y);
+		});
+	}
+
+	private updateAnimState() {
 		const { walk, jump, dash, idle } = Player.animStates;
 
 		if (this.dashing) {
@@ -103,7 +136,7 @@ export class Player extends Entity {
 			if (this.currentState === jump || this.currentState === dash) return;
 
 			this.setState(jump);
-		} else if (this.velocity.x !== 0) {
+		} else if (this.state.velocity.x !== 0) {
 			if (this.currentState === walk) return;
 
 			this.setState(walk);
@@ -117,7 +150,7 @@ export class Player extends Entity {
 	stopMovement() {
 		this.decelerationTween?.progress(1);
 
-		this.decelerationTween = gsap.to(this.velocity, {
+		this.decelerationTween = gsap.to(this.state.velocity, {
 			duration: this.config.decelerateDuration,
 			x: 0,
 			ease: "power1.in",
@@ -128,9 +161,11 @@ export class Player extends Entity {
 	}
 
 	async move(direction: Directions) {
+		if (this.dashing) return;
+
 		this.decelerationTween?.progress(1);
 
-		this.velocity.x = direction * this.config.speed;
+		this.state.velocity.x = direction * this.config.speed;
 
 		this.updateAnimState();
 
@@ -141,31 +176,33 @@ export class Player extends Entity {
 	}
 
 	async dash() {
-		if (this.velocity.x === 0) return;
-
-		this.decelerationTween?.progress(1);
+		if (this.state.velocity.x === 0) return;
 
 		this.dashing = true;
 
-		this.updateAnimState();
+		this.decelerationTween?.progress(1);
 
-		const sign = this.velocity.x > 0 ? Directions.RIGHT : Directions.LEFT;
-
-		this.velocity.x = this.config.speed * this.config.dashMultiplier * sign;
+		this.state.velocity.x =
+			this.config.speed * this.config.dashMultiplier * this.getDirection();
 
 		await wait(this.config.dashDuration);
 
-		this.velocity.x = this.config.speed * sign;
+		this.state.velocity.x = this.config.speed * this.getDirection();
 
 		this.dashing = false;
-		this.updateAnimState();
+	}
+
+	private getDirection() {
+		if (this.state.velocity.x === 0)
+			return this.scale.x > 0 ? Directions.RIGHT : Directions.LEFT;
+
+		return this.state.velocity.x > 0 ? Directions.RIGHT : Directions.LEFT;
 	}
 
 	async jump() {
 		if (this.jumping) return;
 
 		this.jumping = true;
-		this.updateAnimState();
 
 		await gsap.to(this, {
 			duration: 0.3,
@@ -177,6 +214,5 @@ export class Player extends Entity {
 		});
 
 		this.jumping = false;
-		this.updateAnimState();
 	}
 }

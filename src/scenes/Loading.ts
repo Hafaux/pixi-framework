@@ -6,7 +6,7 @@ import { centerObjects } from "../utils/misc";
 export default class Loading extends Scene {
 	name = "Loading";
 
-	assetLoader = AssetLoader.getInstance();
+	private assetLoader = AssetLoader.getInstance();
 
 	async load() {
 		await this.assetLoader.loadAssetsGroup("Loading");
