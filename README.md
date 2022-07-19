@@ -1,11 +1,11 @@
 ## 🎮 Simple 2D Game Framework for [PixiJS](https://pixijs.com) using [Vite⚡](https://vitejs.dev/)
 
-[Demo](https://pixi-framework.up.railway.app/)
+<a href="https://pixi-framework.up.railway.app/" target="_blank">Demo</a>
 
 ### Highlights 🌟
 
 - Typescript
-- [Blazing fast](https://c.tenor.com/Hw0aKasI6B4AAAAC/fast-blazing-fast.gif) builds and HMR through Vite
+- <a href="https://c.tenor.com/Hw0aKasI6B4AAAAC/fast-blazing-fast.gif" target="_blank">Blazing fast</a> builds and HMR through Vite
 - Scene management
 - Automagic asset loading per scene (sounds, spritesheets, textures)
 - Keyboard input handling
