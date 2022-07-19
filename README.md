@@ -6,8 +6,8 @@
 
 - Typescript
 - [Blazing fast](https://c.tenor.com/Hw0aKasI6B4AAAAC/fast-blazing-fast.gif) builds and HMR through Vite
-- Automagic asset loading (sounds, spritesheets, textures)
 - Scene management
+- Automagic asset loading per scene (sounds, spritesheets, textures)
 - Keyboard input handling
 
 ## Usage 🛠️
