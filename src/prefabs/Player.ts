@@ -1,6 +1,8 @@
-import GameObject, { AnimState } from "../core/GameObject";
 import gsap from "gsap";
+import { Container } from "pixi.js";
+import Animation from "../core/Animation";
 import Keyboard from "../core/Keyboard";
+import SceneManager from "../core/SceneManager";
 import { wait } from "../utils/misc";
 import ParallaxBackground from "./ParallaxBackground";
 
@@ -9,8 +11,19 @@ enum Directions {
 	RIGHT = 1,
 }
 
-export class Player extends GameObject {
+type AnimState = {
+	anim: string;
+	soundName?: string;
+	loop?: boolean;
+	speed?: number;
+};
+
+export class Player extends Container {
 	private keyboard = Keyboard.getInstance();
+	private ticker = SceneManager.getInstance().ticker;
+
+	anim: Animation;
+	currentState: AnimState | null = null;
 
 	static animStates: Record<string, AnimState> = {
 		idle: {
@@ -66,7 +79,11 @@ export class Player extends GameObject {
 	private decelerationTween?: gsap.core.Tween;
 
 	constructor() {
-		super({ spritesheet: "wizard" });
+		super();
+
+		this.anim = new Animation("wizard");
+
+		this.addChild(this.anim);
 
 		this.setState(Player.animStates.idle);
 
@@ -74,6 +91,12 @@ export class Player extends GameObject {
 			if (buttonState === "pressed") this.onActionPress(action);
 			else if (buttonState === "released") this.onActionRelease(action);
 		});
+	}
+
+	setState(state: AnimState) {
+		this.currentState = state;
+
+		return this.anim.play(state);
 	}
 
 	private onActionPress(action: keyof typeof Keyboard.actions) {
