@@ -1,9 +1,9 @@
-import { Sprite, Text } from "pixi.js";
+import { Container, Sprite, Text } from "pixi.js";
 import AssetLoader from "../core/AssetLoader";
-import Scene from "../core/Scene";
 import { centerObjects } from "../utils/misc";
+import type { Scene } from "../core/SceneManager";
 
-export default class Loading extends Scene {
+export default class Loading extends Container implements Scene {
 	name = "Loading";
 
 	private assetLoader = AssetLoader.getInstance();

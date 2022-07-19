@@ -1,5 +1,5 @@
 import { DisplayObject, Sprite } from "pixi.js";
-import Scene from "../core/Scene";
+import type { Scene } from "../core/SceneManager";
 
 export const centerObjects = (...toCenter: DisplayObject[]) => {
 	const center = (obj: DisplayObject) => {

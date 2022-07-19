@@ -1,9 +1,18 @@
 import { AbstractRenderer, Application, Container, Ticker } from "pixi.js";
 import { debug } from "../utils/debug";
 import { importScenes } from "../utils/misc";
-import Scene from "./Scene";
 
 if (import.meta.env.DEV) debug.init();
+
+export interface Scene extends Container {
+	name: string;
+
+	load?(): void | Promise<void>;
+
+	unload?(): void | Promise<void>;
+
+	start?(): void | Promise<void>;
+}
 
 export default class SceneManager {
 	private static instance: SceneManager;
@@ -47,6 +56,9 @@ export default class SceneManager {
 		this.currentScene = this.sceneInstances.get(sceneName);
 
 		if (!this.currentScene) this.currentScene = await this.initScene(sceneName);
+
+		if (!this.currentScene)
+			throw new Error(`Failed to initialize scene: ${sceneName}`);
 
 		this.stage.addChild(this.currentScene);
 

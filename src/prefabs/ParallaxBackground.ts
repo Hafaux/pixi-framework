@@ -1,34 +1,36 @@
 import { Container, TilingSprite } from "pixi.js";
+import { centerObjects } from "../utils/misc";
 
-type BgConfig = {
+export type BgConfig = {
+	layers: string[];
+	panSpeed: number;
 	offset: {
 		x: number;
 		y: number;
 	};
-	speed: number;
 };
 
 export default class ParallaxBackground extends Container {
 	name = "Background";
 
 	config: BgConfig;
-	layers: string[];
+	layers: string[] = [];
 	tilingSprites: TilingSprite[] = [];
 
 	constructor(
-		layers: string[] = [],
-		config: BgConfig = { offset: { x: 0, y: 0 }, speed: 1 }
+		config: BgConfig = { offset: { x: 0, y: 0 }, panSpeed: 1, layers: [] }
 	) {
 		super();
 
 		this.config = config;
-		this.layers = layers;
+
+		centerObjects(this);
 
 		this.init();
 	}
 
 	init() {
-		for (const layer of this.layers) {
+		for (const layer of this.config.layers) {
 			const tilingSprite = TilingSprite.from(layer, {
 				width: window.innerWidth,
 				height: window.innerHeight,
@@ -49,11 +51,11 @@ export default class ParallaxBackground extends Container {
 	updatePosition(x: number, y: number) {
 		for (const [index, child] of this.children.entries()) {
 			if (child instanceof TilingSprite) {
-				child.tilePosition.x -= x * index * this.config.speed;
-				child.tilePosition.y -= y * index * this.config.speed;
+				child.tilePosition.x -= x * index * this.config.panSpeed;
+				child.tilePosition.y -= y * index * this.config.panSpeed;
 			} else {
-				child.x -= x * index * this.config.speed;
-				child.y -= y * index * this.config.speed;
+				child.x -= x * index * this.config.panSpeed;
+				child.y -= y * index * this.config.panSpeed;
 			}
 		}
 	}

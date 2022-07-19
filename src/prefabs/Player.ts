@@ -1,4 +1,4 @@
-import Entity, { EntityState } from "../core/Entity";
+import GameObject, { AnimState } from "../core/GameObject";
 import gsap from "gsap";
 import Keyboard from "../core/Keyboard";
 import { wait } from "../utils/misc";
@@ -9,10 +9,10 @@ enum Directions {
 	RIGHT = 1,
 }
 
-export class Player extends Entity {
+export class Player extends GameObject {
 	private keyboard = Keyboard.getInstance();
 
-	static animStates: Record<string, EntityState> = {
+	static animStates: Record<string, AnimState> = {
 		idle: {
 			anim: "idle",
 			loop: true,
@@ -39,12 +39,19 @@ export class Player extends Entity {
 
 	config = {
 		speed: 10,
-		dashMultiplier: 6,
-		jumpHeight: 200,
-		scale: 1,
-		maxJumps: 2,
-		dashDuration: 0.1,
+		turnDuration: 0.15,
 		decelerateDuration: 0.1,
+		scale: 1,
+		jump: {
+			height: 200,
+			maxJumps: 2,
+			duration: 0.3,
+			ease: "sine",
+		},
+		dash: {
+			speedMultiplier: 6,
+			duration: 0.1,
+		},
 	};
 
 	state = {
@@ -170,7 +177,7 @@ export class Player extends Entity {
 		this.updateAnimState();
 
 		gsap.to(this.scale, {
-			duration: 0.15,
+			duration: this.config.turnDuration,
 			x: this.config.scale * direction,
 		});
 	}
@@ -183,9 +190,11 @@ export class Player extends Entity {
 		this.decelerationTween?.progress(1);
 
 		this.state.velocity.x =
-			this.config.speed * this.config.dashMultiplier * this.getDirection();
+			this.config.speed *
+			this.config.dash.speedMultiplier *
+			this.getDirection();
 
-		await wait(this.config.dashDuration);
+		await wait(this.config.dash.duration);
 
 		this.state.velocity.x = this.config.speed * this.getDirection();
 
@@ -202,14 +211,16 @@ export class Player extends Entity {
 	async jump() {
 		if (this.jumping) return;
 
+		const { height, duration, ease } = this.config.jump;
+
 		this.jumping = true;
 
 		await gsap.to(this, {
-			duration: 0.3,
-			y: `-=${this.config.jumpHeight}`,
-			ease: "power1.out",
+			duration,
+			y: `-=${height}`,
+			ease: `${ease}.out`,
 			yoyo: true,
-			yoyoEase: "power1.in",
+			yoyoEase: `${ease}.in`,
 			repeat: 1,
 		});
 
