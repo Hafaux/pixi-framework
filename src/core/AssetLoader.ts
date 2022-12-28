@@ -1,100 +1,80 @@
-import { Loader, LoaderResource, Spritesheet } from "pixi.js";
+import { Assets, Spritesheet } from "pixi.js";
 import { debug } from "../utils/debug";
 import { importAssetFiles } from "../utils/misc";
 
 type Asset = {
-	name: string;
-	url: string;
-	ext: string;
-	category: string;
-	group: string;
+  name: string;
+  url: string;
+  ext: string;
+  category: string;
+  group: string;
 };
 
 export const spritesheets: Record<string, Spritesheet> = {};
 
-/**
- * Replace with https://pixijs.download/dev/docs/PIXI.Assets.html when it's released
- */
 export default class AssetLoader {
-	private static instance: AssetLoader;
-	private assetFileUrls = importAssetFiles();
+  private assetFileUrls = importAssetFiles();
 
-	manifest: Asset[];
+  manifest: Asset[];
 
-	private constructor() {
-		this.manifest = this.generateManifest();
-	}
+  constructor() {
+    this.manifest = this.generateManifest();
+  }
 
-	static getInstance(): AssetLoader {
-		if (!AssetLoader.instance) {
-			AssetLoader.instance = new AssetLoader();
-		}
+  async loadAssetsGroup(group: string) {
+    const sceneAssets = this.manifest.filter((asset) => asset.group === group);
 
-		return AssetLoader.instance;
-	}
+    for (const asset of sceneAssets) {
+      Assets.add(asset.name, asset.url);
+    }
 
-	loadAssetsGroup(group: any) {
-		const loader = new Loader();
-		const sceneAssets = this.manifest.filter((asset) => asset.group === group);
+    const resources = await Assets.load(sceneAssets.map((asset) => asset.name));
 
-		for (const asset of sceneAssets) {
-			loader.add(asset.name, asset.url);
-		}
+    debug.log("✅ Loaded assets group", group, resources);
 
-		return new Promise<Asset[]>((resolve, _reject) => {
-			loader.load((_loader, resources) => {
-				this.prepareSpritesheets(resources);
+    this.prepareSpritesheets(resources);
 
-				debug.warn("✅ Loaded assets group", group, resources);
+    return resources;
+  }
 
-				if (Object.keys(spritesheets).length)
-					debug.warn("🌟 Spritesheets: ", spritesheets);
+  prepareSpritesheets(resources: Record<string, Spritesheet>) {
+    for (const [name, resource] of Object.entries(resources)) {
+      if (!("animations" in resource)) continue;
 
-				resolve(sceneAssets);
-			});
-		});
-	}
+      spritesheets[name] = resource;
+    }
+  }
 
-	prepareSpritesheets(resources: Record<string, LoaderResource>) {
-		for (const [name, resource] of Object.entries(resources)) {
-			const { spritesheet } = resource;
+  generateManifest() {
+    const assetsManifest: Asset[] = [];
+    const assetPathRegexp =
+      /public\/(?<group>[\w.-]+)\/(?<category>[\w.-]+)\/(?<name>[\w.-]+)\.(?<ext>\w+)$/;
 
-			if (!spritesheet) continue;
+    this.assetFileUrls.forEach((assetPath) => {
+      const match = assetPathRegexp.exec(assetPath);
 
-			spritesheets[name] = spritesheet;
-		}
-	}
+      if (!match || !match.groups) {
+        return console.error(
+          `Invalid asset path: ${assetPath}, should match ${assetPathRegexp}`
+        );
+      }
 
-	generateManifest() {
-		const assetsManifest: Asset[] = [];
-		const assetPathRegexp =
-			/public\/(?<group>[\w.-]+)\/(?<category>[\w.-]+)\/(?<name>[\w.-]+)\.(?<ext>\w+)$/;
+      const { group, category, name, ext } = match.groups;
 
-		this.assetFileUrls.forEach((assetPath) => {
-			const match = assetPathRegexp.exec(assetPath);
+      if (category === "spritesheets" && ext !== "json") {
+        // Skip image files in spritesheets category
+        return;
+      }
 
-			if (!match || !match.groups) {
-				return console.error(
-					`Invalid asset path: ${assetPath}, should match ${assetPathRegexp}`
-				);
-			}
+      assetsManifest.push({
+        group,
+        category,
+        name,
+        ext,
+        url: assetPath.replace(/.*public/, ""),
+      });
+    });
 
-			const { group, category, name, ext } = match.groups;
-
-			if (category === "spritesheets" && ext !== "json") {
-				// Skip image files in spritesheets category
-				return;
-			}
-
-			assetsManifest.push({
-				group,
-				category,
-				name,
-				ext,
-				url: assetPath.replace(/.*public/, ""),
-			});
-		});
-
-		return assetsManifest;
-	}
+    return assetsManifest;
+  }
 }

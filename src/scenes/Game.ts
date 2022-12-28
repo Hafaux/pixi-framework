@@ -1,24 +1,23 @@
-import { Container } from "pixi.js";
 import config from "../config";
 import ParallaxBackground from "../prefabs/ParallaxBackground";
 import { Player } from "../prefabs/Player";
 import { centerObjects } from "../utils/misc";
-import type { Scene } from "../core/SceneManager";
+import Scene from "../core/Scene";
 
-export default class Game extends Container implements Scene {
-	name = "Game";
+export default class Game extends Scene {
+  name = "Game";
 
-	load() {
-		const background = new ParallaxBackground(config.backgrounds.forest);
+  load() {
+    const world = new ParallaxBackground(config.backgrounds.forest);
 
-		const player = new Player();
+    const player = new Player();
 
-		player.initPlayerMovement(background);
+    world.initPlayerMovement(player);
 
-		centerObjects(player);
+    centerObjects(player);
 
-		player.y += 300;
+    player.y += 300;
 
-		this.addChild(background, player);
-	}
+    this.addChild(world, player);
+  }
 }

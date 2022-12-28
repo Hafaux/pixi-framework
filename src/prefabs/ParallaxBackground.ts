@@ -1,62 +1,73 @@
-import { Container, TilingSprite } from "pixi.js";
+import { Container, TilingSprite, Ticker } from "pixi.js";
 import { centerObjects } from "../utils/misc";
 
 export type BgConfig = {
-	layers: string[];
-	panSpeed: number;
-	offset: {
-		x: number;
-		y: number;
-	};
+  layers: string[];
+  panSpeed: number;
+  offset: {
+    x: number;
+    y: number;
+  };
 };
 
 export default class ParallaxBackground extends Container {
-	name = "Background";
+  name = "Background";
 
-	config: BgConfig;
-	layers: string[] = [];
-	tilingSprites: TilingSprite[] = [];
+  config: BgConfig;
+  layers: string[] = [];
+  tilingSprites: TilingSprite[] = [];
 
-	constructor(
-		config: BgConfig = { offset: { x: 0, y: 0 }, panSpeed: 1, layers: [] }
-	) {
-		super();
+  constructor(
+    config: BgConfig = { offset: { x: 0, y: 0 }, panSpeed: 1, layers: [] }
+  ) {
+    super();
 
-		this.config = config;
+    this.config = config;
 
-		centerObjects(this);
+    centerObjects(this);
 
-		this.init();
-	}
+    this.init();
+  }
 
-	init() {
-		for (const layer of this.config.layers) {
-			const tilingSprite = TilingSprite.from(layer, {
-				width: window.innerWidth,
-				height: window.innerHeight,
-			});
+  init() {
+    for (const layer of this.config.layers) {
+      const tilingSprite = TilingSprite.from(layer, {
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
 
-			tilingSprite.name = layer;
-			tilingSprite.anchor.set(0.5);
+      tilingSprite.name = layer;
+      tilingSprite.anchor.set(0.5);
 
-			this.tilingSprites.push(tilingSprite);
+      this.tilingSprites.push(tilingSprite);
 
-			tilingSprite.tilePosition.y = this.config.offset.y;
-			tilingSprite.tilePosition.x = this.config.offset.x;
+      tilingSprite.tilePosition.y = this.config.offset.y;
+      tilingSprite.tilePosition.x = this.config.offset.x;
 
-			this.addChild(tilingSprite);
-		}
-	}
+      this.addChild(tilingSprite);
+    }
+  }
 
-	updatePosition(x: number, y: number) {
-		for (const [index, child] of this.children.entries()) {
-			if (child instanceof TilingSprite) {
-				child.tilePosition.x -= x * index * this.config.panSpeed;
-				child.tilePosition.y -= y * index * this.config.panSpeed;
-			} else {
-				child.x -= x * index * this.config.panSpeed;
-				child.y -= y * index * this.config.panSpeed;
-			}
-		}
-	}
+  initPlayerMovement(object: {
+    state: { velocity: { x: number; y: number } };
+  }) {
+    Ticker.shared.add((delta) => {
+      const x = object.state.velocity.x * delta;
+      const y = object.state.velocity.y * delta;
+
+      this.updatePosition(x, y);
+    });
+  }
+
+  updatePosition(x: number, y: number) {
+    for (const [index, child] of this.children.entries()) {
+      if (child instanceof TilingSprite) {
+        child.tilePosition.x -= x * index * this.config.panSpeed;
+        child.tilePosition.y -= y * index * this.config.panSpeed;
+      } else {
+        child.x -= x * index * this.config.panSpeed;
+        child.y -= y * index * this.config.panSpeed;
+      }
+    }
+  }
 }

@@ -1,11 +1,6 @@
 import SceneManager from "./core/SceneManager";
 
-async function Start() {
-	const sceneManager = SceneManager.getInstance();
+const sceneManager = new SceneManager();
 
-	await sceneManager.switchScene("Loading");
-
-	await sceneManager.switchScene("Game");
-}
-
-Start();
+await sceneManager.switchScene("Loading");
+await sceneManager.switchScene("Game");
