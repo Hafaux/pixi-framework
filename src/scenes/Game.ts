@@ -1,23 +1,34 @@
 import config from "../config";
 import ParallaxBackground from "../prefabs/ParallaxBackground";
 import { Player } from "../prefabs/Player";
-import { centerObjects } from "../utils/misc";
 import Scene from "../core/Scene";
 
 export default class Game extends Scene {
   name = "Game";
 
+  private player: Player | undefined;
+  private background: ParallaxBackground | undefined;
+
   load() {
-    const world = new ParallaxBackground(config.backgrounds.forest);
+    this.background = new ParallaxBackground(config.backgrounds.forest);
+    this.player = new Player();
 
-    const player = new Player();
+    this.player.x = window.innerWidth / 2;
+    this.player.y = window.innerHeight - this.player.height / 3;
 
-    world.initPlayerMovement(player);
+    this.background.initPlayerMovement(this.player);
 
-    centerObjects(player);
+    this.addChild(this.background, this.player);
+  }
 
-    player.y += 300;
+  onResize(width: number, height: number) {
+    if (this.player) {
+      this.player.x = width / 2;
+      this.player.y = height - this.player.height / 3;
+    }
 
-    this.addChild(world, player);
+    if (this.background) {
+      this.background.resize(width, height);
+    }
   }
 }

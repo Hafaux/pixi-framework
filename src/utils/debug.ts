@@ -16,11 +16,11 @@ const warn = (...messages: unknown[]) => {
 const init = async () => {
   const PIXI = await import("pixi.js");
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (window as any).PIXI = PIXI;
+  // @ts-expect-error assigning PIXI to the window object
+  window.PIXI = PIXI;
 };
 
-export const debug = {
+export const Debug = {
   log,
   warn,
   init,
