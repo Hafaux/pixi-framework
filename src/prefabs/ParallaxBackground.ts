@@ -1,48 +1,47 @@
-import { Container, TilingSprite, Ticker } from "pixi.js";
+import { Container, TilingSprite, Ticker, Texture } from "pixi.js";
 import { centerObjects } from "../utils/misc";
 
 export type BgConfig = {
   layers: string[];
   panSpeed: number;
-  offset: {
-    x: number;
-    y: number;
-  };
 };
 
 export default class ParallaxBackground extends Container {
   name = "Background";
 
-  config: BgConfig;
   layers: string[] = [];
   tilingSprites: TilingSprite[] = [];
 
   constructor(
-    config: BgConfig = { offset: { x: 0, y: 0 }, panSpeed: 1, layers: [] }
+    protected config: BgConfig = {
+      panSpeed: 1,
+      layers: [],
+    }
   ) {
     super();
 
-    this.config = config;
+    this.init();
 
     centerObjects(this);
-
-    this.init();
   }
 
   init() {
     for (const layer of this.config.layers) {
-      const tilingSprite = TilingSprite.from(layer, {
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
+      const texture = Texture.from(layer);
+      const scaleFactor = window.innerHeight / texture.height;
+
+      const tilingSprite = new TilingSprite(
+        texture,
+        window.innerWidth / scaleFactor,
+        texture.height
+      );
+
+      tilingSprite.scale.set(scaleFactor);
 
       tilingSprite.name = layer;
       tilingSprite.anchor.set(0.5);
 
       this.tilingSprites.push(tilingSprite);
-
-      tilingSprite.tilePosition.y = this.config.offset.y;
-      tilingSprite.tilePosition.x = this.config.offset.x;
 
       this.addChild(tilingSprite);
     }
@@ -69,5 +68,16 @@ export default class ParallaxBackground extends Container {
         child.y -= y * index * this.config.panSpeed;
       }
     }
+  }
+
+  resize(width: number, height: number) {
+    for (const layer of this.tilingSprites) {
+      const scaleFactor = height / layer.texture.height;
+
+      layer.width = width / scaleFactor;
+      layer.scale.set(scaleFactor);
+    }
+
+    centerObjects(this);
   }
 }

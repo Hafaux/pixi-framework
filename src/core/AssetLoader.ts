@@ -1,6 +1,5 @@
 import { Assets, Spritesheet } from "pixi.js";
-import { debug } from "../utils/debug";
-import { importAssetFiles } from "../utils/misc";
+import { Debug } from "../utils/debug";
 
 type Asset = {
   name: string;
@@ -13,12 +12,18 @@ type Asset = {
 export const spritesheets: Record<string, Spritesheet> = {};
 
 export default class AssetLoader {
-  private assetFileUrls = importAssetFiles();
+  private assetFileUrls = this.importAssetFiles();
 
   manifest: Asset[];
 
   constructor() {
     this.manifest = this.generateManifest();
+  }
+
+  importAssetFiles() {
+    const assetFiles = import.meta.glob("/public/**/*.*");
+
+    return Object.keys(assetFiles);
   }
 
   async loadAssetsGroup(group: string) {
@@ -30,7 +35,7 @@ export default class AssetLoader {
 
     const resources = await Assets.load(sceneAssets.map((asset) => asset.name));
 
-    debug.log("✅ Loaded assets group", group, resources);
+    Debug.log("✅ Loaded assets group", group, resources);
 
     this.prepareSpritesheets(resources);
 

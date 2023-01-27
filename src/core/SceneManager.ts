@@ -1,17 +1,16 @@
 import { Application } from "pixi.js";
 import Scene from "./Scene";
-import { debug } from "../utils/debug";
-import { importScenes } from "../utils/misc";
+import { Debug } from "../utils/debug";
 import AssetLoader from "./AssetLoader";
 
-if (import.meta.env.DEV) debug.init();
+if (import.meta.env.DEV) Debug.init();
 
 export interface SceneUtils {
   assetLoader: AssetLoader;
 }
 
 export default class SceneManager {
-  private sceneConstructors = importScenes();
+  private sceneConstructors = this.importScenes();
 
   app: Application;
   sceneInstances = new Map<string, Scene>();
@@ -25,6 +24,28 @@ export default class SceneManager {
       powerPreference: "high-performance",
       backgroundColor: 0x23272a,
     });
+
+    window.addEventListener("resize", (ev: UIEvent) => {
+      const target = ev.target as Window;
+
+      this.currentScene?.onResize?.(target.innerWidth, target.innerHeight);
+    });
+  }
+
+  importScenes() {
+    const sceneModules = import.meta.glob("/src/scenes/*.ts", {
+      eager: true,
+    }) as Record<string, { default: ConstructorType<typeof Scene> }>;
+
+    return Object.entries(sceneModules).reduce((acc, [path, module]) => {
+      const fileName = path.split("/").pop()?.split(".")[0];
+
+      if (!fileName) throw new Error("Error while parsing filename");
+
+      acc[fileName] = module.default;
+
+      return acc;
+    }, {} as Record<string, ConstructorType<typeof Scene>>);
   }
 
   async switchScene(sceneName: string, deletePrevious = true): Promise<Scene> {

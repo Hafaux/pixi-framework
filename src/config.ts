@@ -18,10 +18,6 @@ export default {
         "plant",
       ],
       panSpeed: 0.2,
-      offset: {
-        x: 0,
-        y: -100,
-      },
     },
   },
 } as Config;

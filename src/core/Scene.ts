@@ -5,7 +5,7 @@ export interface Scene {
   load?(): void | Promise<void>;
   unload?(): void | Promise<void>;
   start?(): void | Promise<void>;
-  onResize?(): void;
+  onResize?(width: number, height: number): void;
 }
 
 export abstract class Scene extends Container {

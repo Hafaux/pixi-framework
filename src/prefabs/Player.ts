@@ -16,6 +16,9 @@ type AnimState = {
   speed?: number;
 };
 
+/**
+ * Example class showcasing the usage of the```Animation``` and ```Keyboard```
+ */
 export class Player extends Container {
   private keyboard = Keyboard.getInstance();
   anim: Animation;
