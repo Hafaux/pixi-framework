@@ -17,7 +17,7 @@ type AnimState = {
 };
 
 /**
- * Example class showcasing the usage of the```Animation``` and ```Keyboard```
+ * Example class showcasing the usage of the```Animation``` and ```Keyboard``` classes
  */
 export class Player extends Container {
   private keyboard = Keyboard.getInstance();
@@ -56,7 +56,6 @@ export class Player extends Container {
     scale: 1,
     jump: {
       height: 200,
-      maxJumps: 2,
       duration: 0.3,
       ease: "sine",
     },
