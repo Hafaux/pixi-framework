@@ -13,12 +13,6 @@ export function centerObjects(...toCenter: DisplayObject[]) {
   toCenter.forEach(center);
 }
 
-// export function fit(...toFit: DisplayObject[]) {
-//   for (const item of toFit) {
-//     if (item.)
-//   }
-// }
-
 export function wait(seconds: number) {
   return new Promise<void>((res) => setTimeout(res, seconds * 1000));
 }
