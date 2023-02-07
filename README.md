@@ -20,6 +20,6 @@
 
 | Command           | Description                                                          |
 | ----------------- | -------------------------------------------------------------------- |
-| `npm run dev`     | Run dev server                                                       |
+| `npm run start`   | Run dev server                                                       |
 | `npm run build`   | Build project for production                                         |
 | `npm run preview` | Preview production build (must run `build` before running `preview`) |

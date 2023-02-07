@@ -3,7 +3,7 @@ import { AnimatedSprite, Container } from "pixi.js";
 import { spritesheets } from "../core/AssetLoader";
 
 export default class Animation extends Container {
-  animationTextures: typeof spritesheets[""]["animations"];
+  animationTextures: (typeof spritesheets)[""]["animations"];
   sprite: AnimatedSprite | undefined;
   speed = 1;
 
