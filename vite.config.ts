@@ -3,6 +3,9 @@ import { defineConfig } from "vite";
 export default defineConfig({
   build: {
     target: "esnext",
+    rollupOptions: {
+      external: /\.skel$/,
+    },
   },
   server: {
     port: 3000,
