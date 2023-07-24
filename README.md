@@ -23,7 +23,7 @@ Place your exported spine animations in the `public/<scene>/spine` folder. The f
 
 ```typescript
 ...
-const anim = new SpineAnim("spine-name");
+const anim = new SpineAnimation("spine-name");
 
 parent.addChild(anim);
 
