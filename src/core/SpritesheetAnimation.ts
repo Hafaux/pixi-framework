@@ -1,10 +1,9 @@
 import { sound } from "@pixi/sound";
-import { AnimatedSprite, Container } from "pixi.js";
-import { spritesheets } from "../core/AssetLoader";
+import { AnimatedSprite, Assets, Container } from "pixi.js";
 
-export default class Animation extends Container {
-  animationTextures: (typeof spritesheets)[""]["animations"];
-  sprite: AnimatedSprite | undefined;
+export default class SpritesheetAnimation extends Container {
+  animationTextures: Record<string, AnimatedSprite["textures"]>;
+  sprite?: AnimatedSprite;
   speed = 1;
 
   animations = new Map<string, AnimatedSprite>();
@@ -16,7 +15,7 @@ export default class Animation extends Container {
 
     this.name = name;
     this.speed = speed;
-    this.animationTextures = spritesheets[name].animations;
+    this.animationTextures = Assets.get(name).animations;
   }
 
   private initAnimation(anim: string) {
