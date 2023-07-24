@@ -1,5 +1,6 @@
-import { Assets, Spritesheet } from "pixi.js";
+import { Assets } from "pixi.js";
 import { Debug } from "../utils/debug";
+import "pixi-spine";
 
 type Asset = {
   name: string;
@@ -8,8 +9,6 @@ type Asset = {
   category: string;
   group: string;
 };
-
-export const spritesheets: Record<string, Spritesheet> = {};
 
 export default class AssetLoader {
   private assetFileUrls = this.importAssetFiles();
@@ -37,17 +36,7 @@ export default class AssetLoader {
 
     Debug.log("✅ Loaded assets group", group, resources);
 
-    this.prepareSpritesheets(resources);
-
     return resources;
-  }
-
-  prepareSpritesheets(resources: Record<string, Spritesheet>) {
-    for (const [name, resource] of Object.entries(resources)) {
-      if (!("animations" in resource)) continue;
-
-      spritesheets[name] = resource;
-    }
   }
 
   generateManifest() {
@@ -66,8 +55,12 @@ export default class AssetLoader {
 
       const { group, category, name, ext } = match.groups;
 
+      // Skip image files in the spine or spritesheets category
       if (category === "spritesheets" && ext !== "json") {
-        // Skip image files in spritesheets category
+        return;
+      }
+
+      if (category === "spine" && ext !== "json" && ext !== "skel") {
         return;
       }
 

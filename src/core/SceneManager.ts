@@ -1,9 +1,6 @@
 import { Application } from "pixi.js";
 import Scene from "./Scene";
-import { Debug } from "../utils/debug";
 import AssetLoader from "./AssetLoader";
-
-if (import.meta.env.DEV) Debug.init();
 
 export interface SceneUtils {
   assetLoader: AssetLoader;
@@ -24,6 +21,9 @@ export default class SceneManager {
       powerPreference: "high-performance",
       backgroundColor: 0x23272a,
     });
+
+    // @ts-expect-error Set PIXI app to global window object for the PIXI Inspector
+    window.__PIXI_APP__ = this.app;
 
     window.addEventListener("resize", (ev: UIEvent) => {
       const target = ev.target as Window;

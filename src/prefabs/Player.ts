@@ -1,6 +1,6 @@
 import gsap from "gsap";
 import { Container } from "pixi.js";
-import Animation from "./Animation";
+import SpritesheetAnimation from "../core/SpritesheetAnimation";
 import Keyboard from "../core/Keyboard";
 import { wait } from "../utils/misc";
 
@@ -21,7 +21,7 @@ type AnimState = {
  */
 export class Player extends Container {
   private keyboard = Keyboard.getInstance();
-  anim: Animation;
+  anim: SpritesheetAnimation;
   currentState: AnimState | null = null;
 
   static animStates: Record<string, AnimState> = {
@@ -79,7 +79,7 @@ export class Player extends Container {
   constructor() {
     super();
 
-    this.anim = new Animation("wizard");
+    this.anim = new SpritesheetAnimation("wizard");
 
     this.addChild(this.anim);
 
