@@ -30,6 +30,10 @@ export default class SceneManager {
 
       this.currentScene?.onResize?.(target.innerWidth, target.innerHeight);
     });
+
+    this.app.ticker.add(() => {
+      this.currentScene?.update?.(this.app.ticker.elapsedMS);
+    });
   }
 
   importScenes() {
