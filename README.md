@@ -1,5 +1,7 @@
 ## 🎮 Simple 2D Game Framework for [PixiJS](https://pixijs.com) using [Vite⚡](https://vitejs.dev/)
 
+<a href="https://pixi-framework.onrender.com/" target="_blank">Demo</a>
+
 ### Highlights 🌟
 
 - Typescript
