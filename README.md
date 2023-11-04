@@ -1,7 +1,5 @@
 ## 🎮 Simple 2D Game Framework for [PixiJS](https://pixijs.com) using [Vite⚡](https://vitejs.dev/)
 
-<a href="https://pixi-framework.up.railway.app/" target="_blank">Demo</a>
-
 ### Highlights 🌟
 
 - Typescript
