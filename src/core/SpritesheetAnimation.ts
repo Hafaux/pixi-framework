@@ -1,19 +1,23 @@
-import { sound } from "@pixi/sound";
 import { AnimatedSprite, Assets, Container } from "pixi.js";
+import Deferred from "../utils/Deferred";
+
+type PlayOptions = {
+  loop?: boolean;
+  speed?: number;
+};
 
 export default class SpritesheetAnimation extends Container {
   animationTextures: Record<string, AnimatedSprite["textures"]>;
-  sprite?: AnimatedSprite;
+  sprite: AnimatedSprite;
   speed = 1;
 
   animations = new Map<string, AnimatedSprite>();
-
-  currentAnimation: string | null = null;
+  currentAnimation: string;
 
   constructor(name: string, speed = 1) {
     super();
 
-    this.name = name;
+    this.label = name;
     this.speed = speed;
     this.animationTextures = Assets.get(name).animations;
   }
@@ -23,30 +27,18 @@ export default class SpritesheetAnimation extends Container {
 
     if (!textures) {
       console.error(`Animation ${anim} not found`);
-
-      return;
     }
 
     const sprite = new AnimatedSprite(textures);
 
-    sprite.name = anim;
+    sprite.label = anim;
     sprite.anchor.set(0.5);
     sprite.animationSpeed = this.speed;
 
     return sprite;
   }
 
-  play({
-    anim,
-    soundName,
-    loop = false,
-    speed = this.speed,
-  }: {
-    anim: string;
-    soundName?: string;
-    loop?: boolean;
-    speed?: number;
-  }) {
+  play(anim: string, { loop, speed }: PlayOptions = {}): Promise<void> {
     if (this.sprite) {
       this.sprite.stop();
 
@@ -58,29 +50,25 @@ export default class SpritesheetAnimation extends Container {
     if (!this.sprite) {
       this.sprite = this.initAnimation(anim);
 
-      if (!this.sprite) return;
-
       this.animations.set(anim, this.sprite);
     }
 
     this.currentAnimation = anim;
 
-    this.sprite.loop = loop;
-    this.sprite.animationSpeed = speed;
+    this.sprite.loop = loop ?? false;
+    this.sprite.animationSpeed = speed ?? this.speed;
     this.sprite.gotoAndPlay(0);
-
-    if (soundName) sound.play(soundName);
 
     this.addChild(this.sprite);
 
-    return new Promise<void>((resolve) => {
-      if (!this.sprite) return resolve();
+    const deferred = new Deferred<void>();
 
-      this.sprite.onComplete = () => {
-        this.currentAnimation = null;
+    this.sprite.onComplete = () => {
+      this.currentAnimation = null;
 
-        resolve();
-      };
-    });
+      deferred.resolve();
+    };
+
+    return deferred.promise;
   }
 }

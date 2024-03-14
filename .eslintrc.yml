@@ -5,10 +5,8 @@
     [
       "eslint:recommended",
       "plugin:@typescript-eslint/recommended",
-      "plugin:prettier/recommended"
+      "plugin:prettier/recommended",
     ],
-  rules: { 
-    "quotes": [2, "double"], 
-    "indent": ["warn", 2, { "SwitchCase": 1 }],
-  }
+  rules:
+    { "quotes": [2, "double"], "indent": ["warn", 2, { "SwitchCase": 1 }] },
 }

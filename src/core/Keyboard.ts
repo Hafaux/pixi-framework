@@ -1,52 +1,17 @@
-import { utils } from "pixi.js";
+export type KeyCallback = (data: { state: "up" | "down" }) => void;
 
-export default class Keyboard extends utils.EventEmitter {
+export default class Keyboard {
   private static instance: Keyboard;
-
-  static states = {
-    ACTION: "ACTION",
-  };
-
-  static actions = {
-    UP: "UP",
-    DOWN: "DOWN",
-    LEFT: "LEFT",
-    RIGHT: "RIGHT",
-    JUMP: "JUMP",
-    SHIFT: "SHIFT",
-  } as const;
-
-  static actionKeyMap = {
-    [Keyboard.actions.UP]: "KeyW",
-    [Keyboard.actions.DOWN]: "KeyS",
-    [Keyboard.actions.LEFT]: "KeyA",
-    [Keyboard.actions.RIGHT]: "KeyD",
-    [Keyboard.actions.JUMP]: "Space",
-    [Keyboard.actions.SHIFT]: "ShiftLeft",
-  } as const;
-
-  static allKeys = Object.values(Keyboard.actionKeyMap);
-
-  static keyActionMap = Object.entries(Keyboard.actionKeyMap).reduce(
-    (acc, [key, action]) => {
-      acc[action] = key as keyof typeof Keyboard.actions;
-
-      return acc;
-    },
-    {} as Record<string, keyof typeof Keyboard.actionKeyMap>
-  );
-
   private keyMap = new Map<string, boolean>();
+  private callbacks = new Map<string, KeyCallback[]>();
 
   private constructor() {
-    super();
-
     this.listenToKeyEvents();
   }
 
   private listenToKeyEvents() {
-    document.addEventListener("keydown", (e) => this.onKeyPress(e.code));
-    document.addEventListener("keyup", (e) => this.onKeyRelease(e.code));
+    document.addEventListener("keydown", (e) => this.onKeyDown(e.code));
+    document.addEventListener("keyup", (e) => this.onKeyUp(e.code));
   }
 
   public static getInstance(): Keyboard {
@@ -57,39 +22,43 @@ export default class Keyboard extends utils.EventEmitter {
     return Keyboard.instance;
   }
 
-  public getAction(action: keyof typeof Keyboard.actions): boolean {
-    return this.isKeyDown(Keyboard.actionKeyMap[action]);
+  public registerKey(key: string, callback?: KeyCallback): void {
+    if (!this.callbacks.has(key)) {
+      this.callbacks.set(key, []);
+    }
+
+    this.callbacks.get(key).push(callback);
   }
 
-  public onAction(
-    callback: (e: {
-      action: keyof typeof Keyboard.actions;
-      buttonState: "pressed" | "released";
-    }) => void
-  ): void {
-    this.on(Keyboard.states.ACTION, callback);
+  public unregisterKey(key: string, callback?: KeyCallback): void {
+    if (!this.callbacks.has(key)) return;
+
+    const callbacks = this.callbacks.get(key);
+    const index = callbacks.indexOf(callback);
+
+    if (index !== -1) {
+      callbacks.splice(index, 1);
+    } else {
+      callbacks.length = 0;
+    }
   }
 
-  private onKeyPress(key: string): void {
-    if (this.isKeyDown(key) || !(key in Keyboard.keyActionMap)) return;
+  private onKeyDown(key: string): void {
+    if (this.isKeyDown(key)) return;
 
     this.keyMap.set(key, true);
 
-    this.emit(Keyboard.states.ACTION, {
-      action: Keyboard.keyActionMap[key],
-      buttonState: "pressed",
-    });
+    if (!this.callbacks.has(key)) return;
+
+    this.callbacks.get(key).forEach((callback) => callback({ state: "down" }));
   }
 
-  private onKeyRelease(key: string): void {
-    if (!(key in Keyboard.keyActionMap)) return;
-
+  private onKeyUp(key: string): void {
     this.keyMap.set(key, false);
 
-    this.emit(Keyboard.states.ACTION, {
-      action: Keyboard.keyActionMap[key],
-      buttonState: "released",
-    });
+    if (!this.callbacks.has(key)) return;
+
+    this.callbacks.get(key).forEach((callback) => callback({ state: "up" }));
   }
 
   public isKeyDown(key: string): boolean {

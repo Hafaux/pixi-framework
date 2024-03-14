@@ -1,6 +1,6 @@
 export default class Deferred<T, E = unknown> {
   promise: Promise<T>;
-  resolve: (value: T | PromiseLike<T>) => void = () => null;
+  resolve: (value?: T | PromiseLike<T>) => void = () => null;
   reject: (reason?: E) => void = () => null;
 
   constructor() {

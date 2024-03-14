@@ -1,6 +1,5 @@
 import { Assets } from "pixi.js";
 import { Debug } from "../utils/debug";
-import "pixi-spine";
 
 type Asset = {
   name: string;
@@ -25,14 +24,20 @@ export default class AssetLoader {
     return Object.keys(assetFiles);
   }
 
-  async loadAssetsGroup(group: string) {
+  async loadAssetsGroup(
+    group: string,
+    onProgress?: (progress: number) => void
+  ) {
     const sceneAssets = this.manifest.filter((asset) => asset.group === group);
 
     for (const asset of sceneAssets) {
-      Assets.add(asset.name, asset.url);
+      Assets.add({ alias: asset.name, src: asset.url });
     }
 
-    const resources = await Assets.load(sceneAssets.map((asset) => asset.name));
+    const resources = await Assets.load(
+      sceneAssets.map((asset) => asset.name),
+      onProgress
+    );
 
     Debug.log("✅ Loaded assets group", group, resources);
 

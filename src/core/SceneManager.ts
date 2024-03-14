@@ -1,28 +1,34 @@
-import { Application } from "pixi.js";
+import { Application, ApplicationOptions } from "pixi.js";
 import Scene from "./Scene";
 import AssetLoader from "./AssetLoader";
+import { Debug } from "../utils/debug";
 
 export interface SceneUtils {
   assetLoader: AssetLoader;
 }
 
-export default class SceneManager {
-  private sceneConstructors = this.importScenes();
+type SceneConstructor = ConstructorType<typeof Scene>;
 
+export default class SceneManager {
   app: Application;
-  sceneInstances = new Map<string, Scene>();
+  sceneInstances = new Map<SceneConstructor, Scene>();
   currentScene?: Scene;
 
   constructor() {
-    this.app = new Application({
-      view: document.querySelector("#app") as HTMLCanvasElement,
+    this.app = new Application();
+  }
+
+  async init(options: Partial<ApplicationOptions> = {}) {
+    await this.app.init({
+      canvas: document.querySelector("#app") as HTMLCanvasElement,
       autoDensity: true,
       resizeTo: window,
       powerPreference: "high-performance",
-      backgroundColor: 0x23272a,
+      ...options,
     });
 
-    // @ts-expect-error Set PIXI app to global window object for the PIXI Inspector
+    Debug.log(`🎨 Rendering context: ${this.app.renderer.name}`);
+
     window.__PIXI_APP__ = this.app;
 
     window.addEventListener("resize", (ev: UIEvent) => {
@@ -32,35 +38,24 @@ export default class SceneManager {
     });
 
     this.app.ticker.add(() => {
-      this.currentScene?.update?.(this.app.ticker.elapsedMS);
+      this.currentScene?.onUpdate?.(this.app.ticker.elapsedMS);
     });
   }
 
-  importScenes() {
-    const sceneModules = import.meta.glob("/src/scenes/*.ts", {
-      eager: true,
-    }) as Record<string, { default: ConstructorType<typeof Scene> }>;
-
-    return Object.entries(sceneModules).reduce((acc, [path, module]) => {
-      const fileName = path.split("/").pop()?.split(".")[0];
-
-      if (!fileName) throw new Error("Error while parsing filename");
-
-      acc[fileName] = module.default;
-
-      return acc;
-    }, {} as Record<string, ConstructorType<typeof Scene>>);
-  }
-
-  async switchScene(sceneName: string, deletePrevious = true): Promise<Scene> {
+  async switchScene(
+    scene: SceneConstructor,
+    deletePrevious = true
+  ): Promise<Scene> {
     await this.removeScene(deletePrevious);
 
-    this.currentScene = this.sceneInstances.get(sceneName);
+    Debug.log(`🔀 Switching to scene ${scene.name}`);
 
-    if (!this.currentScene) this.currentScene = await this.initScene(sceneName);
+    this.currentScene = this.sceneInstances.get(scene);
+
+    if (!this.currentScene) this.currentScene = await this.initScene(scene);
 
     if (!this.currentScene)
-      throw new Error(`Failed to initialize scene: ${sceneName}`);
+      throw new Error(`Failed to initialize scene: ${scene}`);
 
     this.app.stage.addChild(this.currentScene);
 
@@ -72,10 +67,18 @@ export default class SceneManager {
   private async removeScene(destroyScene: boolean) {
     if (!this.currentScene) return;
 
-    if (destroyScene) {
-      this.sceneInstances.delete(this.currentScene.name);
+    Debug.log(
+      `🔀 Removing scene ${this.currentScene.constructor.name} ${
+        destroyScene && "and destroying it"
+      }`
+    );
 
+    if (destroyScene) {
       this.currentScene.destroy({ children: true });
+
+      this.sceneInstances.delete(
+        this.currentScene.constructor as SceneConstructor
+      );
     } else {
       this.app.stage.removeChild(this.currentScene);
     }
@@ -85,14 +88,14 @@ export default class SceneManager {
     this.currentScene = undefined;
   }
 
-  private async initScene(sceneName: string) {
+  private async initScene(sceneConstructor: SceneConstructor) {
     const sceneUtils = {
       assetLoader: new AssetLoader(),
     };
 
-    const scene = new this.sceneConstructors[sceneName](sceneUtils);
+    const scene = new sceneConstructor(sceneUtils);
 
-    this.sceneInstances.set(sceneName, scene);
+    this.sceneInstances.set(sceneConstructor, scene);
 
     if (scene.load) await scene.load();
 

@@ -1,7 +1,7 @@
-import { DisplayObject, Sprite } from "pixi.js";
+import { Container, Sprite } from "pixi.js";
 
-export function centerObjects(...toCenter: DisplayObject[]) {
-  const center = (obj: DisplayObject) => {
+export function centerObjects(...toCenter: Container[]) {
+  const center = (obj: Container) => {
     obj.x = window.innerWidth / 2;
     obj.y = window.innerHeight / 2;
 

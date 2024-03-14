@@ -5,3 +5,7 @@ type ConstructorType<T extends abstract new (...args: never) => unknown> = new (
 type Entries<T> = {
   [K in keyof T]: [K, T[K]];
 }[keyof T][];
+
+interface Window {
+  __PIXI_APP__: Application;
+}
