@@ -6,12 +6,10 @@ export interface Scene {
   unload?(): void | Promise<void>;
   start?(): void | Promise<void>;
   onResize?(width: number, height: number): void;
-  update?(delta: number): void;
+  onUpdate?(delta: number): void;
 }
 
 export abstract class Scene extends Container {
-  abstract name: string;
-
   constructor(protected utils: SceneUtils) {
     super();
   }

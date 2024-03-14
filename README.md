@@ -1,15 +1,16 @@
 ## 🎮 Simple 2D Game Framework for [PixiJS](https://pixijs.com) using [Vite⚡](https://vitejs.dev/)
 
-<a href="https://pixi-framework.onrender.com/" target="_blank">Demo</a>
+<a href="https://pixi-framework.onrender.com/" target="_blank">Demo (old)</a>
 
 ### Highlights 🌟
 
+- Latest PixiJS version (8)
 - Typescript
 - <a href="https://c.tenor.com/Hw0aKasI6B4AAAAC/fast-blazing-fast.gif" target="_blank">Blazing fast</a> builds and HMR through Vite
 - Scene management
 - Automagic asset loading per scene (sounds, spritesheets, textures, spine)
 - Keyboard input handling
-- Spine!
+- Spine! (Waiting for PixiJS 8 support)
 
 ## Usage 🛠️
 

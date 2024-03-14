@@ -19,9 +19,9 @@
     "vite": "^4.0.4"
   },
   "dependencies": {
-    "@pixi/sound": "^5.2.0",
+    "@pixi/sound": "^6.0.0",
     "gsap": "^3.11.4",
-    "pixi-spine": "^4.0.4",
-    "pixi.js": "^7.2.4"
+    "pixi.js": "^8.0.2",
+    "ts-key-enum": "^2.0.12"
   }
 }

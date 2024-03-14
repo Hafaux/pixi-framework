@@ -1,26 +1,24 @@
-import { Sprite, Text } from "pixi.js";
+import { Sprite } from "pixi.js";
 import Scene from "../core/Scene";
 import { centerObjects } from "../utils/misc";
 
 export default class Loading extends Scene {
-  name = "Loading";
-
+  loading: Sprite;
   async load() {
     await this.utils.assetLoader.loadAssetsGroup("Loading");
 
-    const bg = Sprite.from("bgNight");
+    this.loading = Sprite.from("loading");
 
-    const text = new Text("Loading...", {
-      fontFamily: "Verdana",
-      fontSize: 50,
-      fill: "white",
-    });
+    this.loading.alpha = 0.5;
+    this.loading.scale.set(0.5);
 
-    text.resolution = 2;
+    centerObjects(this.loading);
 
-    centerObjects(bg, text);
+    this.addChild(this.loading);
+  }
 
-    this.addChild(bg, text);
+  onUpdate(delta: number): void {
+    this.loading.rotation += 0.001 * delta;
   }
 
   async start() {
